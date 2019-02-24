@@ -17,7 +17,7 @@ func (e *Explorer) Execute(forWallet WalletType, address string) ([]byte, error)
 		e.client = http.DefaultClient
 	}
 
-	resp, err := e.client.Get(fmt.Sprintf("%s/%s", e.getURI(forWallet), address))
+	resp, err := e.client.Get(fmt.Sprintf(e.getURI(forWallet), address))
 	if err != nil {
 		return []byte{}, err
 	}
@@ -31,9 +31,9 @@ func (e *Explorer) Execute(forWallet WalletType, address string) ([]byte, error)
 func (e *Explorer) getURI(forWallet WalletType) string {
 	switch forWallet {
 	case WalletTypeBTC:
-		return ""
+		return "https://api.blockcypher.com/v1/btc/main/addrs/%s/balance"
 	case WalletTypeETH:
-		return ""
+		return "https://api.blockcypher.com/v1/eth/main/addrs/%s/balance"
 	}
 
 	return ""
